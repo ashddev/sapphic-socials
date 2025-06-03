@@ -1,7 +1,12 @@
 import type { Metadata } from "next";
 import { Geist } from "next/font/google";
 import "./globals.css";
+import "../styles/background.css";
 import { cn } from "@/lib/utils";
+
+import { config } from "@fortawesome/fontawesome-svg-core";
+import "@fortawesome/fontawesome-svg-core/styles.css";
+config.autoAddCss = false;
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,7 +32,7 @@ export default function RootLayout({
           geistSans.variable
         )}
       >
-        <main className="flex-grow flex items-center justify-center">
+        <main className="flex-grow flex items-center justify-center backgroundImage">
           {children}
         </main>
       </body>
