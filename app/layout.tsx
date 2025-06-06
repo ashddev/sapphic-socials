@@ -14,7 +14,7 @@ const geistSans = Geist({
 });
 
 export const metadata: Metadata = {
-  title: "Sapphic Socials UK",
+  title: "Sapphic Socials UK Mailing List",
   description:
     "Stay up to day with our latest events and news by signing up to the Sapphic Socials UK Mailing List.",
 };
