@@ -20,6 +20,7 @@ import { cn } from "@/lib/utils";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 const formSchema = z.object({
   email: z.string().email(),
@@ -86,8 +87,8 @@ export default function SignUpForm({
         </CardContent>
       </Card>
       <div className="text-muted-foreground *:[a]:hover:text-primary text-center text-xs text-balance *:[a]:underline *:[a]:underline-offset-4">
-        By clicking continue, you agree to our <a href="#">Terms of Service</a>{" "}
-        and <a href="#">Privacy Policy</a>.
+        By subscribing to our mailing list, you agree to our{" "}
+        <Link href={"/privacy-policy"}>Privacy Policy</Link>.
       </div>
     </div>
   );
