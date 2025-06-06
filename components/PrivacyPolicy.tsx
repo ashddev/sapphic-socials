@@ -20,7 +20,7 @@ export default function PrivacyPolicy({
         <Button variant="link" className="text-muted-foreground pt-6 w-fit">
           <Link href={"/"} className="flex items-center gap-1">
             <ArrowLeft />
-            Return to Sign-Up
+            Return to sign up
           </Link>
         </Button>
         <CardHeader className="text-center">
