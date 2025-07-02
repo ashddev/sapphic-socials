@@ -35,15 +35,15 @@ export default function SuccessCard({
           </div>
           <div className="flex gap-3 justify-center mt-5">
             <SocialsButton
-              link="https://www.instagram.com/sapphicsocialsuk/"
+              link="https://www.instagram.com/thesapphicspaceuk/"
               icon={faInstagram}
             />
             <SocialsButton
-              link="https://www.facebook.com/people/Sapphic-Socials/61570442771957/"
+              link="https://www.facebook.com/people/The-Sapphic-Space/61570442771957/"
               icon={faFacebook}
             />
             <SocialsButton
-              link="https://www.tiktok.com/@sapphicsocialsuk/"
+              link="https://www.tiktok.com/@thesapphicspaceuk"
               icon={faTiktok}
             />
           </div>

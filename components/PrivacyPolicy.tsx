@@ -29,7 +29,7 @@ export default function PrivacyPolicy({
         </CardHeader>
         <CardContent className="space-y-4 text-sm leading-relaxed">
           <p>
-            At Sapphic Socials, we respect your privacy and are committed to
+            At The Sappic Space UK, we respect your privacy and are committed to
             protecting your personal data. This Privacy Policy explains how we
             collect, use, and store your data when you sign up to our mailing
             list.
@@ -37,7 +37,7 @@ export default function PrivacyPolicy({
 
           <h3 className="font-semibold">1. Who We Are</h3>
           <p>
-            Sapphic Socials is a UK-based organisation that runs inclusive
+            The Sappic Space UK is a UK-based organisation that runs inclusive
             events for women (trans inclusive 🏳️‍⚧️) and non-binary people who love
             women. Our mailing list is used to share updates about upcoming
             events, community news, and related information.
@@ -110,7 +110,7 @@ export default function PrivacyPolicy({
             contact us at:
           </p>
           <p>
-            📧 <strong>general@sapphicsocialsuk.com</strong>
+            📧 <strong>general@thesapphicspace.co.uk</strong>
           </p>
         </CardContent>
       </Card>

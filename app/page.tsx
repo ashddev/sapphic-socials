@@ -11,7 +11,7 @@ export default function Home() {
               src="/logo.jpg"
               width={100}
               height={100}
-              alt={"Sapphic Socials"}
+              alt={"The Sappic Space"}
               className="rounded-full"
             />
           </div>
