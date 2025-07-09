@@ -32,7 +32,7 @@ export default function RootLayout({
           geistSans.variable
         )}
       >
-        <main className="flex-grow flex items-center justify-center backgroundImage">
+        <main className="flex-grow flex items-center justify-center ">
           {children}
         </main>
       </body>
