@@ -33,8 +33,8 @@ const Calendar = ({ events }: CalendarProps) => {
   }, [selectedMonth, selectedYear]);
 
   return (
-    <div className="flex flex-col items-center gap-4">
-      <div className="flex items-center justify-between min-w-full">
+    <div className="flex flex-col items-center gap-4 bg-white p-10">
+      <div className="flex items-center justify-between w-3xl">
         <ChangeMonthButton
           direction="past"
           currentMonth={selectedMonth}
@@ -52,7 +52,7 @@ const Calendar = ({ events }: CalendarProps) => {
           yearSetter={setSelectedYear}
         />
       </div>
-      <div className="grid grid-cols-7 gap-4">
+      <div className="grid grid-cols-7 gap-2">
         {daysOfWeek.map((day) => (
           <div className="flex items-center justify-center" key={day}>
             {day.slice(0, 3)}
