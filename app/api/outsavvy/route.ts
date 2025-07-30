@@ -1,6 +1,19 @@
 import { NextRequest, NextResponse } from "next/server";
 import * as z from "zod";
 
+const OUTSAVVY_ACCESS_TOKEN = process.env.OUTSAVVY_ACCESS_TOKEN;
+const outsavvyHeaders = {
+  Authorization: `Partner ${OUTSAVVY_ACCESS_TOKEN}`,
+};
+
+const outSavvyDateSchema = z.object({
+  id: z.number().int(),
+  timezone: z.string(),
+  startlocal: z.iso.datetime(),
+  endLocal: z.iso.datetime(),
+  event_date_description: z.string(),
+});
+
 const outSavvyCustomerSchema = z.object({
   id: z.number().int(),
   organiser_id: z.number().int(),
@@ -11,7 +24,19 @@ const outSavvyCustomerSchema = z.object({
   date_created: z.iso.datetime(),
 });
 
-const paginatedResponseSchema = z.object({
+const outSavvyEventSchema = z.object({
+  id: z.number().int(),
+  organiser_id: z.number().int(),
+  name: z.string(),
+  description: z.string(),
+  url: z.url(),
+  dates: outSavvyDateSchema.array(),
+  image_url: z.url(),
+  localtion_name: z.string(),
+  price: z.string(),
+});
+
+const paginatedOutsavvyCustomerResponseSchema = z.object({
   total_items: z.number().int().positive(),
   page_number: z.number().int().positive(),
   page_size: z.number().int().positive(),
@@ -23,22 +48,28 @@ const paginatedResponseSchema = z.object({
   previous_page_number: z.number().int().positive(),
 });
 
+const paginatedOutsavvyEventResponseSchema = z.object({
+  paging: z.object({
+    total_items: z.number().int().positive(),
+    page_number: z.number().int().positive(),
+    page_size: z.number().int().positive(),
+    total_pages: z.number().int().positive(),
+  }),
+  events: outSavvyEventSchema.array(),
+});
+
 type OutsavvyCusomter = z.infer<typeof outSavvyCustomerSchema>;
 
 const getAllCustomersOnMailingList = async (): Promise<OutsavvyCusomter[]> => {
-  const OUTSAVVY_ACCESS_TOKEN = process.env.OUTSAVVY_ACCESS_TOKEN;
   const PAGE_SIZE = 1000;
 
   const outsavvyCustomerUrl = `https://api.outsavvy.com/v1/customers?page_size=${PAGE_SIZE}`;
-  const outsavvyCustomerHeaders = {
-    Authorization: `Partner ${OUTSAVVY_ACCESS_TOKEN}`,
-  };
 
   const outsavvyCustomersApiResponse = await fetch(outsavvyCustomerUrl, {
-    headers: outsavvyCustomerHeaders,
+    headers: outsavvyHeaders,
   }).then((response) => response.json());
 
-  const parsedOutsavvyCustomers = paginatedResponseSchema.parse(
+  const parsedOutsavvyCustomers = paginatedOutsavvyCustomerResponseSchema.parse(
     outsavvyCustomersApiResponse
   );
 
@@ -118,6 +149,21 @@ const uploadCustomersToMailerLite = async (customers: OutsavvyCusomter[]) => {
   return chunkResponses;
 };
 
+const getEvents = async () => {
+  const outsavvyCustomerUrl = `https://api.outsavvy.com/v1/events/search`;
+
+  const outsavvyEventsApiResponse = await fetch(outsavvyCustomerUrl, {
+    headers: outsavvyHeaders,
+  })
+    .then((response) => response.json())
+    .then((jsonResponse) =>
+      paginatedOutsavvyEventResponseSchema.parse(jsonResponse)
+    )
+    .catch((error) => console.error(error));
+
+  return outsavvyEventsApiResponse ? outsavvyEventsApiResponse.events : [];
+};
+
 export async function GET(request: NextRequest) {
   const authHeader = request.headers.get("authorization");
   if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
@@ -128,6 +174,10 @@ export async function GET(request: NextRequest) {
   const mailerLiteResponse = await uploadCustomersToMailerLite(
     customersOnEmailingList
   );
+
+  const events = getEvents();
+  // if event is 5 days away from today
+  // send event promotion campaign
 
   return NextResponse.json({
     status: 201,
